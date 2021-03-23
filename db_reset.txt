@@ -54,3 +54,65 @@ Apunte de flux para backend_url
 				const existingFav = delFav.filter(i => i.cocktail_id !== fav_id);
 				setStore({ favorites: [...existingFav] });
 			}
+
+
+****************************************flask-mail**********************************
+from flask_mail import Mail, Message
+
+app.config.update(
+	DEBUG=True,
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = 'correo@correo.com',
+	MAIL_PASSWORD = 'password'
+	)
+mail = Mail(app)
+def test_request():
+    # json_obj = {"name": "daniel"}
+    recipient = "alguien@correo.com"
+    try:
+        msg = Message("Hello",
+                  sender="correo@correo.com",
+                  recipients=[recipient])
+        msg.body = "Welcome to blah blah blah"        mail.send(msg)
+        return "Mail Sent"    except Exception as e:
+        return (str(e))
+
+***********************************************************************************
+
+
+###############################alternative testing for delFav******************
+			deleteFavoritez: async fav_id => {
+				const store = getStore();
+				const drinkIndex = store.favorites.findIndex(i => i.cocktail_id == fav_id);
+				console.log("####$: ", drinkIndex);
+				let favID = await store.favorites[drinkIndex].id;
+				console.log("ID: ", favId);
+				if (drinkIndex != -1) {
+					fetch(`https://3001-chocolate-tarantula-5ng0qguc.ws-us03.gitpod.io/favorites/${favID}`, {
+						method: "DELETE"
+					}).then(() => getActions().getUserFavorites(store.sessionUID));
+				}
+			},
+
+			deleteFavoritex: id => {
+				const store = getStore();
+				const FavList = store.favorites.filter((item, f) => id != f);
+				setStore({ favorites: [...FavList] });
+			},
+
+			deleteFavoritess: async fav_id => {
+				const res = await fetch(
+					`https://3001-chocolate-tarantula-5ng0qguc.ws-us03.gitpod.io/favorite/${fav_id}`,
+					{
+						method: "DELETE"
+					}
+				);
+				const info = await res.json(); //traemos data del fetch
+				console.log(info);
+				const delFav = getStore().favorites;
+				const existingFav = delFav.filter(i => i.cocktail_id !== fav_id);
+				setStore({ favorites: [...existingFav] });
+			}

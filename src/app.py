@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
+from flask_mail import Mail, Message
 from flask import Flask, request, jsonify, url_for, send_from_directory, flash,json
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -45,6 +46,33 @@ app.register_blueprint(api, url_prefix='/api')
 app.config['JWT_SECRET_KEY'] = '$An$Jo$Mo$Ma$'
 #JSON Web Token Management
 jwt = JWTManager(app)
+
+#Flask-mail
+app.config.update(
+	DEBUG=True,
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = 'correo@correo.com',
+	MAIL_PASSWORD = 'password'
+	)
+mail = Mail(app)
+
+
+@app.route('/reset', methods=['POST'])
+def test_request():
+    # json_obj = {"name": "johnDoe"}
+    recipient = "a1@group.corp"
+    try:
+        msg = Message("Hello",
+                  sender="correo@correo.com",
+                  recipients=[recipient])
+        msg.body = "Welcome to blah blah blah"        
+        mail.send(msg)
+        return "Mail Sent"    
+        except Exception as e:
+        return (str(e))
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -172,13 +200,15 @@ def add_favorite():
 @app.route('/favorite/<int:fav_id>', methods=['DELETE'])
 @jwt_required()
 def delete_fav_by_id():
+def delete_fav_by_id(fav_id):
     fav = Favorite.query.filter_by(id=fav_id).first_or_404()
+    print(fav)
     if fav is None:
         raise APIException('Favorito no encontrado', status_code=404)
     else:
         db.session.delete(fav)
         db.session.commit()
-        return jsonify(fav.serialize()), 204 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
+        return jsonify(fav.serialize()), 200 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
 #endregion Favorite
 

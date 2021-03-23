@@ -5,6 +5,10 @@ import { Container, Dropdown, DropdownButton } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
 import "../../styles/disable_scroll.scss";
 import "../../styles/home.scss";
+//Animaciones
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({ duration: 2000 });
 
 export const NavFav = () => {
 	const { actions, store } = useContext(Context);
@@ -30,12 +34,12 @@ export const NavFav = () => {
 						</div>
 						<div className="main-menubar d-flex align-items-center">
 							<nav className="hide">
-								{/* <Link to="/home">
+								<Link to="/home" className="float-left mt-1">
 									<a>Home</a>
-								</Link> */}
-								{/* Para anadir favoritos */}
+								</Link>
 								<DropdownButton
-									id="dropdown-basic-button"
+									size="sm"
+									className="float-left"
 									variant="outline-light"
 									title={"Favorites " + store.favorites.length}>
 									{store.favorites.length == 0 ? (
@@ -46,7 +50,7 @@ export const NavFav = () => {
 												<Dropdown.Item
 													eventKey={i}
 													key={i}
-													onClick={() => actions.deleteFavorites(i)}>
+													onClick={() => actions.deleteFavorites(favorite.id)}>
 													<div>
 														{favorite.cocktail_name}
 														<i className="far fa-trash-alt" />

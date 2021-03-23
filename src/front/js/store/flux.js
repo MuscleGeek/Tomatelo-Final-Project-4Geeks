@@ -222,13 +222,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			deleteFavorites: fav_id => {
 				const store = getStore();
 				fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/delete/${fav_id}`, {
-					method: "DELETE"
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${store.jwtoken}`
+					}
 				})
 					.then(response => response.json())
 					.then(data => {
 						setStore({ favorites: data });
 					});
 			}
+
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
 		}

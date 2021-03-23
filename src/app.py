@@ -60,19 +60,20 @@ app.config.update(
 mail = Mail(app)
 
 
-@app.route('/reset', methods=['POST'])
-def test_request():
+ @app.route('/reset', methods=['POST'])
+ def test_request():
     # json_obj = {"name": "johnDoe"}
     recipient = "a1@group.corp"
     try:
         msg = Message("Hello",
-                  sender="correo@correo.com",
-                  recipients=[recipient])
+                   sender="correo@correo.com",
+                   recipients=[recipient])
         msg.body = "Welcome to blah blah blah"        
         mail.send(msg)
         return "Mail Sent"    
-        except Exception as e:
+    except Exception as e:
         return (str(e))
+
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -199,7 +200,6 @@ def add_favorite():
         ###DELETE FAVORITE BY ID###
 @app.route('/favorite/<int:fav_id>', methods=['DELETE'])
 @jwt_required()
-def delete_fav_by_id():
 def delete_fav_by_id(fav_id):
     fav = Favorite.query.filter_by(id=fav_id).first_or_404()
     print(fav)

@@ -183,6 +183,7 @@ def add_favorite():
         myfavs = list(map(lambda f: f.serialize(), favs))
         return  jsonify(myfavs), 200
     return "Error, invalid method", 404
+
         ###DELETE FAVORITE BY ID###
 @app.route('/favorite/<int:fav_id>', methods=['DELETE'])
 @jwt_required()
@@ -197,7 +198,16 @@ def delete_fav_by_id(fav_id):
         return jsonify(fav.serialize()), 200 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
 #endregion Favorite
-
+@api.route('/user/updatepass/<int:id>', methods=['PUT'])
+def pass_update(id):
+    payload =  request.get_json()
+    pass = payload.get("password")
+    user = User.query.get(id)
+    if user ==  None:
+        return jsonify({"status": "failed", "msg":"User not found"}), 404
+    db.session.add(user)
+    db.session.commit()
+    return jsonify("status": "failed", "msg": "Password has been changed successfully"), 200
 #region LOGIN
 @app.route('/login', methods=['POST'])
 def user_login():
@@ -226,8 +236,12 @@ def user_login():
     print(myToken)
     return jsonify(myToken), 200 
 
-
 #endregion LOGIN
+
+
+
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Button, Breadcrumb } from "react-bootstrap";
+import tomatelofoo from "../../img/logo/tomategif.gif";
 import { Redirect } from "react-router-dom";
 import "../../styles/galeria.scss";
 
@@ -9,17 +10,15 @@ export const Home = () => {
 	return (
 		<>
 			{store.jwtoken == null ? <Redirect to="/" /> : "/home"}
-			<div className="container mb-4">
+			<div className="container">
 				<div className="contenedor text-center">
 					<article className="text-light textBox">
 						<p>
-							Mas que una pagina ilustrativa, en TOMATE`LO puedes encontrar los cócteles más populares
+							Más que una página ilustrativa, en TOMATE`LO puedes encontrar los cócteles más populares
 							seleccionados para tí!
 						</p>
 						<footer className="blockquote-footer">
-							<small className="text-muted">
-								Sabias que puedes encontrar informacion dentro de las imagenes
-							</small>
+							Sabias que puedes encontrar informacion dentro de las imagenes
 						</footer>
 					</article>
 					<div className="row">
@@ -159,7 +158,7 @@ export const Home = () => {
 							<div className="principal">
 								<div className="frente" />
 								<div className="atras text-light">
-									<h4>Holy Moly</h4>
+									<h4>Holly Molly</h4>
 									<p>Sabias que este coctel no tiene Alcohol como base.</p>
 									<Button href="#WithoutBase" className="Button" variant="outline-success">
 										Ver más

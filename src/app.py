@@ -54,8 +54,8 @@ app.config.update(
 	MAIL_SERVER='smtp.gmail.com',
 	MAIL_PORT=465,
 	MAIL_USE_SSL=True,
-	MAIL_USERNAME = 'correo@correo.com',
-	MAIL_PASSWORD = 'password'
+	MAIL_USERNAME = 'a1groupcr@gmail.com',
+	MAIL_PASSWORD = '$$2021$$a1group$$'
 	)
 mail = Mail(app)
 
@@ -63,10 +63,10 @@ mail = Mail(app)
  @app.route('/reset', methods=['POST'])
  def test_request():
     # json_obj = {"name": "johnDoe"}
-    recipient = "a1@group.corp"
+    recipient = "littlenoobhtb@gmail.com"
     try:
         msg = Message("Hello",
-                   sender="correo@correo.com",
+                   sender="a1groupcr@gmail.com",
                    recipients=[recipient])
         msg.body = "Welcome to blah blah blah"        
         mail.send(msg)
@@ -147,16 +147,7 @@ def update_user(user_id):
 #endregion USER
 
 #region Favorite
-#region add GET FAVORITE
-            ###GET ALL FAVORITES###
-# @app.route('/favorite', methods=['GET'])
-# @jwt_required
-# def get_favorites():
-    
-#     fav = Favorite.query.all()
-#     payload = list(map(lambda f: f.serialize(), fav))
-#     return jsonify(payload), 200
-    #endregion END GET FAVORITE   
+  
             ###ADD FAVORITE###
 @app.route('/favorite', methods=['POST', 'GET'])
 @jwt_required()
@@ -176,12 +167,7 @@ def add_favorite():
             raise APIException("Cocktail ID must be typed ", status_code=400)
         if 'cocktail_name' not in req:
             raise APIException("Cocktail name must be typed", status_code=400)
-        # if 'cocktail_img' not in req:
-        #     raise APIException("Cocktail image must be typed", status_code=400)
-        # fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
-        #fav = Favorite(cocktail_id=req["cocktail_id"], cocktail_name= req["cocktail_name"], user_id= req["user_id"])
-        #if 'cocktail_img' not in req:
-            #raise APIException("Cocktail image must be typed", status_code=400)
+        
         fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], user_id=user.id)
         db.session.add(fav)
         db.session.commit()

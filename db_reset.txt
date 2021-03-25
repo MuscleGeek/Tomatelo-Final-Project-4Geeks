@@ -6,6 +6,7 @@ https://codeshare.io/GqgdNx
 Apunte de flux para backend_url
 `${process.env.BACKEND_URL}/favorites`
 
+<<<<<<< HEAD
 
 
 
@@ -117,3 +118,6 @@ def test_request():
 				setStore({ favorites: [...existingFav] });
 			}
 //Comentario
+=======
+// Página Finalizada!
+>>>>>>> 485b538ca327b0eebee6569bbb1977fe436ef151

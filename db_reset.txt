@@ -116,3 +116,4 @@ def test_request():
 				const existingFav = delFav.filter(i => i.cocktail_id !== fav_id);
 				setStore({ favorites: [...existingFav] });
 			}
+//Comentario

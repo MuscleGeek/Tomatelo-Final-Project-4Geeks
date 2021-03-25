@@ -18,6 +18,7 @@ export const Login = () => {
 	const [redirect, setRedirect] = useState(false);
 
 	const [recover, setRecover] = useState("");
+	const [input, setInput] = useState("");
 
 	return (
 		<>
@@ -38,7 +39,12 @@ export const Login = () => {
 						<form
 							onSubmit={async e => {
 								e.preventDefault();
-								await actions.login(email, password);
+								if (email === "" || password === "") {
+									alert("TOMATE`LO: Faltan datos por llenar!");
+								} else {
+									await actions.login(email, password);
+								}
+								e.target.reset();
 							}}>
 							<h4 className="display-5">Log In</h4>
 							<hr className="my-1" />
@@ -69,7 +75,13 @@ export const Login = () => {
 									<small id="emailHelp" className="form-text text-little">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
-									<Button type="submit" variant="outline-info">
+									<Button
+										type="submit"
+										onClink={e => {
+											setInput("");
+										}}
+										value={input}
+										variant="outline-info">
 										Log In
 									</Button>
 								</div>
@@ -110,15 +122,22 @@ export const Login = () => {
 						<form
 							onSubmit={async e => {
 								e.preventDefault();
-
 								let ok = await actions.signup(first_name, last_name, email, password, birthday);
-								if (ok) {
+								if (
+									first_name === "" ||
+									last_name === "" ||
+									email === "" ||
+									password === "" ||
+									birthday === ""
+								) {
+									alert("TOMATE`LO: Faltan datos por llenar!");
+								} else if (ok) {
 									history.push("/");
-									window.scrollTo(0, 0);
+									alert("TOMATE`LO: Te invitamos poner tus datos en Login e ingresar!");
 								} else {
-									alert("failed to submit registration, lets try again");
+									alert("Fallo al registrar, porfavor intentalo de nuevo!");
 								}
-								e.target.reset();
+								//e.target.reset();
 							}}>
 							<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
 								<h4 className="display-5">Registro</h4>
@@ -182,6 +201,7 @@ export const Login = () => {
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
+										{/* onPress={this.reset} */}
 										Registro
 									</Button>
 								</div>

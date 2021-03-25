@@ -124,7 +124,7 @@ def add_user():
             user = User(first_name= req["first_name"], last_name= req["last_name"], email= req["email"], password= req["password"], birthday= req["birthday"])
             db.session.add(user)
             db.session.commit()
-            return "El usuario ha sido agregado exitosamente"
+            return jsonify({"status":"success","msg":"Succesfully registered"}), 200
                     
                     #### DEL USER####
 @app.route('/user/<int:user_id>', methods=['DELETE'])
@@ -198,6 +198,7 @@ def delete_fav_by_id(fav_id):
         return jsonify(fav.serialize()), 200 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
 #endregion Favorite
+<<<<<<< HEAD
 @api.route('/user/updatepass/<int:id>', methods=['PUT'])
 def pass_update(id):
     payload =  request.get_json()
@@ -208,6 +209,21 @@ def pass_update(id):
     db.session.add(user)
     db.session.commit()
     return jsonify("status": "failed", "msg": "Password has been changed successfully"), 200
+=======
+
+##################UPDATE_PASS##########################
+# @api.route('/user/updatepass/<int:id>', methods=['PUT'])
+# def update_pass(id):
+#     payload = request.get_json()
+#     pass = payload.get("password")
+#     user = User.query.get(id)
+#     if user == None:
+#         return jsonify({"status": "failed", "msg":"User not found"}), 404
+#         db.session.add(user)
+#         db.session.commit()
+#     return jsonify("status": "failed", "msg": "Password has been changed successfully"), 200
+
+>>>>>>> 304e2d9aeacb6b647b69203ac772fa128e109c05
 #region LOGIN
 @app.route('/login', methods=['POST'])
 def user_login():
